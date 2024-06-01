@@ -1,0 +1,1 @@
+from .training_EWC import run

@@ -1,0 +1,40 @@
+# USAGE: see class incremental YAML file
+# NOTE: in task incremental learning, the amount of classes per task does NOT change!  --> set class incremental case[0] to False
+# Repetition: the interval after which the initial task is repeated. If NO repetition: set to zero. Example: 1. Every other task, the initial task is repeated. 
+# Different_task_same_class: the amount of initial classes that presist occurence during ALL tasks. Can also be set to zero. Example: 2. The first two classes of every task are alway the same.
+logdir: logs
+run_name: Example TIL
+#learning function parameters:
+Which_learningfunction: ('Replay', 0.6, (True, 2, 10), False)
+Optimizer_and_Learning_Rate: tf.keras.optimizers.Adam(learning_rate=0.0001)
+Loss_function: tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+Number_of_epochs_per_task: 10
+Test_images_per_task: 8
+#task embeddings
+Embedding_dimension_chunk_and_task_embeddings: 100
+Use_a_seperate_task_embedding_model: True
+Initialize_task_embedding_model_with_zero_bias_(True)_or_random_bias_(False): True
+#target network
+Which_Model: ('Dense', False, 50, 0.9, 0.1)
+Target_network_dimension: (200, 300)
+Convolutional_layers: '[(8, (5, 5), 1), (16, (3, 3), 8), (32, (3, 3), 16)]'
+A_final_trainable_soft_max_layer_in_the_target_network: True
+Dropout_rate_in_target_network: 0.3
+#hypernetwork
+Number_of_chunks: 10 
+Hypernetwork_dimension: (100, 50)
+Number_of_classes: 3                
+#others:
+Class_Incremental_Case: (False, 1, 50, (True, 0.9), (10, 0.01), 0.4, 6)
+L2_regularization_strenght: 0
+Validation_accuracy: -0.1
+Max_attempts_when_using_validation_accuracy: 1
+Sampel_rate_sound_data: 16000
+Testing_while_training: True
+#parameters specific to task incremental learning:
+Amount_of_tasks: 3
+Repetition: 100
+Different_task_same_class: 1
+#parameters for running experiments
+Add_results_to_previous_experiment_results: False
+Visualize_results: True

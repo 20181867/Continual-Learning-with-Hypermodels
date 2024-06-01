@@ -1,0 +1,107 @@
+#       USAGE:
+#         fill in hyperparameters as you please*
+#         read the discription in the report for more detials
+
+#       Which_Model = 
+#       Dense, DRNN, ECHO, GRU or LSTM
+
+#        If DRNN:
+#        Depency Preservation between Chunks or between tasks?
+#        Distilation rate. Determines the base of the exponential spacing (e.g. 1 means exponential spacing in which the first layer of every model(t) connected for t /in tasks)
+
+#        If ECHO:
+#        Depency Preservation between Chunks or between tasks?
+#        Reservoir_size. The number of units in the reservoir layer.
+#        Spectral_radius. A high spectral radius means that signals are amplified more as they pass through the reservoir, potentially leading to faster dynamics and richer representations.
+#        Sparsity. A high sparsity value means that a larger portion of the reservoir weight matrix is zero, resulting in fewer connections between reservoir units. This can lead to simpler dynamics and potentially better generalization.
+
+#        If GRU
+#        Depency Preservation between Chunks or between tasks?
+
+#        If LSTM
+#        Depency Preservation between Chunks or between tasks?
+
+#       Which _learningfunction:
+#       Blanco, Replay, MAS, LWF, GEM, AGEM, EWC
+
+#        If Replay:
+#        Memory_regularization : how much do you let the past influence the current predictions
+#        Frugal learning: (Do you want to sample when n_tasks reaches a certain amount?, If True, what amount?, If True, many samples?)
+#        Class Incremental Solution: If True, the weight snapshots are increased in size to match the new weights of the new model, if the number of classes increased. If False, the new weights are decreased, with slicing, to match the old weight snapshots.
+
+#        If MAS:
+#        Regularization_strenght: controls the impact of importance values on the gradients during optimization.  controlling the balance between task-specific learning and knowledge transfer across tasks.
+#        Momentum: determines the balance between the new importance measure and the historical importance measure. A high value (close to 1) places more weight on recent importance measures, leading to faster adaptation to changing gradients. Conversely, a low value (close to 0) gives more weight to historical importance measures, resulting in more stable updates over time.
+
+#        If LWF:
+#        Update_every_epoch: If False, the teacher models predictions are not updated during training of a specific task, but rather only after each task, and therefore, the distilled knowledge remains static during training of a specific task.
+#        Distillation_temperature: if the temperature is low, probabilities in the teacher model are sharper, indicating higher confidence in predictions. This may lead to faster convergence but could also increase the risk of overfitting to the teachers predictions.  
+
+#        If GEM:
+#        Storage_capacity: the amount of representation values stored in the memory, which on its turn is used calculate the GEM gradient.
+#        A_GEM: whether or not to run Average GEM
+#                                               --> if true, with what sample size. E.g. (True, 16) for 16 'old' gradient samples. 
+#        Margin: a smaller margin imposes stricter constraints, leading to more stability but potentially hindering learning on new tasks.
+
+#        If AGEM:
+#        Storage_capacity: see GEM
+#        A_GEM: whether or not to run Average GEM
+#                                               --> if true, with what sample size. E.g. (True, 16) for 16 'old' gradient samples. 
+#        Margin: a smaller margin imposes stricter constraints, leading to more stability but potentially hindering learning on new tasks.
+
+#        If EWC:
+#        Lambda: the strength of the regularization by EWC. A higher value of EWC_lambda emphasizes the preservation of previous task knowledge, potentially leading to slower adaptation to new tasks but better retention of old knowledg.
+
+#       Class_Incremental_Case:
+
+#        True = class incremental case
+#        if True, what is the entropy treshold? 
+#        if True, after how many epochs/images are we considering adding classes? 
+#        If True, Do you want to use Exponential Moving Average (EMA) as entropy measurement (= set to True), Alpha: values of alpha give more weight to recent observations, making the EMA more responsive to changes in the data.
+#        If True, Resettle time = time after class is added to NOT add another class. Set to -1 if you dont want to use it. Entropy value to add to treshhold after a class is added.
+#        If True, the variable tau; balancing the use of similarity versus entropy/EMA. Zhou et al. (2021) concluded 0.4 was the optimal value for THEIR dataset. 
+#        If True, the size of the buffer memory. In the buffer memory, MEL-spec images are stored that are flagged as 'novel', to built a prototype of the novel class. Higher value indicates more accuracy of the similarity measurement.
+
+#       Convolutional layers: (amount of filers, (kernel size), input dim)
+
+#       NOTE: 'Which_learningfunction' and 'Which_Model' should always be tuples. Thus, when using 'Dense', use ('Dense', False) or ('Dense',True) instead. The second element is ignored.
+#       NOTE: please do NOT use (1000, 500) as dense layers in the HYPERNETWORK. This is used for the Task Embedding Model and WILL provide issues in Replay and EWC training.
+
+#       *logically, not every combination works, for example, too many convolutional layers leaves no dimensionality for the data left.
+
+logdir: logs
+run_name: Learning HNET_RGEM with Dense Model; no TEM (CIL)
+#learning function parameters:
+Which_learningfunction: ('HNET_RGEM', 50) 
+Optimizer_and_Learning_Rate: tf.keras.optimizers.Adam(learning_rate=0.00005)
+Loss_function: tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
+Number_of_epochs_per_task: 15
+Test_images_per_task: 10
+#task embeddings
+Embedding_dimension_chunk_and_task_embeddings: 100
+Use_a_seperate_task_embedding_model: False
+Initialize_task_embedding_model_with_zero_bias_(True)_or_random_bias_(False): True
+#target network
+Which_Model: ('DRNN', True, 1)
+Target_network_dimension: (2, 3)
+Convolutional_layers: '[(16, (4,4), 1)]'
+A_final_trainable_soft_max_layer_in_the_target_network: True
+Dropout_rate_in_target_network: 0.3
+#hypernetwork
+Number_of_chunks: 400 
+Hypernetwork_dimension: (200, 250)
+Number_of_initial_classes: 2
+#others:
+Class_Incremental_Case: (True, 0.34, 10, (True, 0.9), (4, 0.005), 0.4, 3)
+L2_regularization_strenght: 0.00001
+Validation_accuracy: -0.1
+Max_attempts_when_using_validation_accuracy: 1
+Sampel_rate_sound_data: 16000
+Testing_while_training: False
+#parameters specific to Class Incremental Learning:
+Additional_classes_per_task: 1
+Amount_of_tasks: 3
+Dilution_factor: 2/3
+#parameters for running experiments
+Add_results_to_previous_experiment_results: False
+Visualize_results: True
