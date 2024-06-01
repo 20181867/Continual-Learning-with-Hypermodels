@@ -2,7 +2,7 @@ This code contains the research tool: everything you need to replicate the exper
 
     "Continual Learning with Hypernetworks"
 
-...and much more! The research tool allows you to consider many possible (frugal learning) scenarios and prove your own hypothesis!
+...and much more! The research tool allows you to consider many possible (frugal learning) scenarios and (dis)prove your own hypothesis!
 
 In total, there are 7*5 = 35 different combinations of models AND learning functions to try out!
 With over 25 hyperparameters to tune (e.g. the learning rate and whether or not to add a seperate task embedding model), there is a lot to discover.
