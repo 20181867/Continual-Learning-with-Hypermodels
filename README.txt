@@ -20,17 +20,26 @@ tqdm version: 4.64.1
 
 The code is generated using Python 3.10.
 
+Setup:
+
+1. download the SSC from:
+    https://www.kaggle.com/datasets/jbuchner/synthetic-speech-commands-dataset
+    (2GB)
+2. Unzip the folder named 'data', containing the folders 'augmented_dataset' and 'augmented_dataset_verynoisy'
+3. Add this unzipped folder in the (initially empty) folder 'data'
+4. Check the dependencies
+5. Use a suitable editor, for example, VSC
+
 How does it work:
 
-1. Check the dependencies, unzip the files and load a suitable editor.
-2. Open the Experiments folder.
-3. Open the .yaml file for the scenario of choice (e.g. Task_incremental.yaml).
-4. Adjust the parameters for the experiment. Make sure to follow the guidelines as written in the class_incremental.yaml file.
-5. Additional experiments may be added, by separating two sets of hyperparameters with a horizontal line: --- 
-6. Save the .yaml adjustments!
-7. Run the .py file for the specific scenario (e.g. Task_incremental.py).
-8. Open the Results folder.
-9. Check your results in the .csv and .jpg file!
+1. Open the Experiments folder.
+2. Open the .yaml file for the scenario of choice (e.g. Task_incremental.yaml).
+3. Adjust the parameters for the experiment. Make sure to follow the guidelines as written in the class_incremental.yaml file.
+4. Additional experiments may be added, by separating two sets of hyperparameters with a horizontal line: --- 
+5. Save the .yaml adjustments!
+6. Run the .py file for the specific scenario (e.g. Task_incremental.py).
+7. Open the Results folder.
+8. Check your results in the .csv and .jpg file!
 
 For questions regarding the research tool:
 
