@@ -4,8 +4,8 @@ This code contains the research tool: everything you need to replicate the exper
 
 ...and much more! The research tool allows you to consider many possible (frugal learning) scenarios and (dis)prove your own hypothesis!
 
-In total, there are 7*5 = 35 different combinations of models AND learning functions to try out!
-With over 25 hyperparameters to tune (e.g. the learning rate and whether or not to add a seperate task embedding model), there is a lot to discover.
+In total, there are 35 different combinations of hypermodels AND learning functions to try out!
+With over 25 hyperparameters to tune (e.g. the learning rate and whether or not to add a seperate task embedding model), there is a lot to discover!
 
 To prevent dependency issues, this certainly works:
 
@@ -41,6 +41,12 @@ How does it work:
 7. Open the Results folder.
 8. Check your results in the .csv and .jpg file!
 
+For a demonstration video, see:
+
+https://youtu.be/dDXlg9s5q_s
+
 For questions regarding the research tool:
+
+contact me at yvarrooijackers@gmail.com
 
 See the report "Continual Learning with Hypernetworks". If there are still questions, contact y.rooijackers@student.tue.nl
