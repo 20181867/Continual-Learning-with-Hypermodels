@@ -47,6 +47,4 @@ https://youtu.be/dDXlg9s5q_s
 
 For questions regarding the research tool:
 
-contact me at yvarrooijackers@gmail.com
-
-See the report "Continual Learning with Hypernetworks". If there are still questions, contact y.rooijackers@student.tue.nl
+See the report "Continual Learning with Hypernetworks". If there are still questions, contact yvarrooijackers@gmail.com.
